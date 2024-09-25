@@ -1,0 +1,22 @@
+.main {
+  text-align: center;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.link {
+  border: 1px solid gray;
+  border-radius: 2px;
+  padding: 8px;
+  margin-block: 30px;
+}
+
+.input {
+  display: block;
+  border-radius: 3px;
+  padding-block: 5px;
+  margin-block: 15px;
+
+}
