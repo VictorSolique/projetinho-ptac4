@@ -1,8 +1,9 @@
-export default interface Usuario {
+interface Usuario {
+    id?: number;
     nome: string;
-    idade: number;
-    email?: string;
+    password: string;
+    email: string;
+    tipo?: "cliente" | "adm";
 }
 
-// export default PerfilUsuario;
 export default Usuario;
