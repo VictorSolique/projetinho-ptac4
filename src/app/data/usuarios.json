@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "nome": "Jorginho BeachTenis",
+        "email": "jorginho.beachtenis@gmail.com",
+        "password": "senha123",
+        "tipo": "adm"
+    },
+    {
+        "id": 2,
+        "nome": "Cela Lopes",
+        "email": "cela.lopes@gmail.com",
+        "password": "senha123",
+        "tipo": "cliente"
+    }
+]
