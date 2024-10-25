@@ -31,7 +31,7 @@ export default function Login() {
     const usuario = usuarios.find((user) => user.email == email && user.password == password)
     if(usuario) {
       localStorage.setItem('usuario', JSON.stringify(usuario))
-      router.push('/cadastro')
+      router.push('/home')
     }
     else {
       setError("Email ou senha invalidos")
@@ -42,7 +42,7 @@ export default function Login() {
   useEffect(() => {
     const usuarioLogado = localStorage.getItem('usuario')
     if (usuarioLogado) {
-      router.push('/cadastro')
+      router.push('/home')
     }
     else {
       setError("Email ou senha inválido")

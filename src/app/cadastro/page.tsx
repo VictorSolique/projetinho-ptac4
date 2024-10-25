@@ -40,7 +40,8 @@ export default function Cadastro() {
 
     return (
         <div>
-            <h1>fhjkshdfjkh</h1>
+            
+            
         </div>
     )
 
