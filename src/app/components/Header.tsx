@@ -21,7 +21,7 @@ export default function Header() {
                             <Link className="nav-link" href={"/login"}>Reservas</Link>
                             </li>
                             <li className="nav-item">
-                            <Link className="nav-link" href={"/login"}>Contato</Link>
+                            <Link className="nav-link" href={"/cadastro"}>Cadastrar</Link>
                             </li>
                         </ul>
                         <div className="d-flex" role="search">

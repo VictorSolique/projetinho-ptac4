@@ -1,6 +1,6 @@
 'use client'
 import styles from "../page.module.css";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Usuario from "../interfaces/usuario";
 import Link from "next/link";
@@ -33,6 +33,16 @@ export default function Login() {
     }
   ])
   const router = useRouter();
+
+
+  const handleSubmit = async (e:FormEvent) => {
+    e.preventDefault();
+
+    fetch("")
+    console.log("Email:", email);
+    console.log("Senha:", password);    
+  }
+
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
