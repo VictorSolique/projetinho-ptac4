@@ -3,6 +3,7 @@ import styles from "../page.module.css";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Usuario from "../interfaces/usuario";
+import Link from "next/link";
 
 export default function Login() {
   const [email, setEmail] = useState<string>();
@@ -38,7 +39,7 @@ export default function Login() {
     const usuario = usuarios.find((user) => user.email == email && user.password == password)
     if (usuario) {
       localStorage.setItem('usuario', JSON.stringify(usuario))
-      router.push('/home')
+      router.push('/')
     }
     else {
       setError("Email ou senha invalidos")
@@ -49,19 +50,16 @@ export default function Login() {
   useEffect(() => {
     const usuarioLogado = localStorage.getItem('usuario')
     if (usuarioLogado) {
-      router.push('/home')
-    }
-    else {
-      setError("Email ou senha inválido")
+      router.push('/')
     }
   }, [router])
 
   return (
-    <section className="vh-100" style={{ backgroundColor: "#508bfc" }}>
-      <div className="container py-5 h-100">
+    <section className="vh-100 bg-dark">
+      <div className="container py-3 h-100">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col-12 col-md-8 col-lg-6 col-xl-5">
-            <div className="card shadow-2-strong" style={{ borderRadius: "1rem" }}>
+            <div className="card shadow-2-strong bg-light shadow" style={{ borderRadius: "1rem" }}>
               <div className="card-body p-5 text-center">
 
                 <h3 className="mb-5">Fazer login</h3>
@@ -87,7 +85,11 @@ export default function Login() {
                   }
 
 
-                  <button type="submit" className="btn btn-primary btn-lg btn-block">Acessar cadastro</button>
+                  <button type="submit" className="btn btn-primary btn-lg btn-block mb-3" aria-label="Fazer login">Fazer Login</button>
+
+                  <p className="text-center">
+                    <Link href={"/cadastro"} className="text-primary">Acessar Cadastro</Link>
+                  </p>
                 </form>
 
               </div>

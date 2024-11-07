@@ -4,104 +4,100 @@ import Link from "next/link";
 import Button from "./components/Button";
 import MyInput from "./components/Input";
 import { AUTOMATIC_FONT_OPTIMIZATION_MANIFEST } from "next/dist/shared/lib/constants";
+import Header from "./components/Header";
 
 export default function Home() {
   return (
     <div>
 
-    <div className="container">
-    <nav className="navbar navbar-expand-lg bg-body-tertiary rounded" aria-label="Eleventh navbar example">
-      <div className="container-fluid">
-        <a className="navbar-brand" href="#">Navbar</a>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
+      <Header />
 
-        <div className="collapse navbar-collapse" id="navbarsExample09">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Link</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link disabled" aria-disabled="true">Disabled</a>
-            </li>
-            <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
-              <ul className="dropdown-menu">
-                <li><a className="dropdown-item" href="#">Action</a></li>
-                <li><a className="dropdown-item" href="#">Another action</a></li>
-                <li><a className="dropdown-item" href="#">Something else here</a></li>
-              </ul>
-            </li>
-          </ul>
-          <form role="search">
-            <input className="form-control" type="search" placeholder="Search" aria-label="Search" />
-          </form>
+      <main>
+        <div id="carouselExampleDark" className="carousel carousel-dark slide">
+          <div className="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          </div>
+          <div className="carousel-inner">
+            <div className="carousel-item active" data-bs-interval="10000">
+              <img src="https://ottawa-guide.ca/wp-content/uploads/2020/05/screen-shot-2020-05-12-at-10.45.01-pm.png?w=1224&h=582&crop=1" className="d-block w-100" alt="Restaurante" />
+              <div className="carousel-caption d-none d-md-block">
+                <h5>Bem-vindo ao Restaurante Delícias</h5>
+                <p>Experimente pratos incríveis em um ambiente acolhedor.</p>
+              </div>
+            </div>
+            <div className="carousel-item" data-bs-interval="2000">
+              <img src="https://ottawa-guide.ca/wp-content/uploads/2020/05/screen-shot-2020-05-12-at-10.45.01-pm.png?w=1224&h=582&crop=1" className="d-block w-100" alt="Prato Especial" />
+              <div className="carousel-caption d-none d-md-block">
+                <h5>Prato do Dia</h5>
+                <p>Delicie-se com nossa especialidade do dia.</p>
+              </div>
+            </div>
+            <div className="carousel-item">
+              <img src="https://ottawa-guide.ca/wp-content/uploads/2020/05/screen-shot-2020-05-12-at-10.45.01-pm.png?w=1224&h=582&crop=1" className="d-block w-100" alt="Ambiente Aconchegante" />
+              <div className="carousel-caption d-none d-md-block">
+                <h5>Ambiente Aconchegante</h5>
+                <p>Um espaço ideal para suas refeições com amigos e família.</p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </nav>
 
-    <nav className="navbar navbar-expand-lg bg-body-tertiary rounded my-3" aria-label="Twelfth navbar example">
-      <div className="container-fluid">
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample10" aria-controls="navbarsExample10" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
+        <div className="container mt-5">
+          <div className="row d-flex justify-content-center">
+            <div className="col-lg-4 text-center" style={{width: "300px"}}>
+              <img src="https://http2.mlstatic.com/D_NQ_NP_958464-MLB69426005651_052023-O.webp" alt="placa escrito reservado" className="img-fluid rounded-circle" width="140" height="140" />
+              <h2 className="fw-normal">Reservas</h2>
+              <p>Reserve sua mesa online de forma rápida e fácil.</p>
+              <p><Link className="btn btn-secondary" href={"/cadastro"}>Reserve agora &raquo;</Link></p>
+            </div>
+            <div className="col-lg-4 text-center" style={{width: "300px"}}>
+              <img src="https://http2.mlstatic.com/D_NQ_NP_958464-MLB69426005651_052023-O.webp" alt="placa escrito reservado" className="img-fluid rounded-circle" width="140" height="140" />
+              <h2 className="fw-normal">Cardápio</h2>
+              <p>Explore nosso cardápio recheado de delícias.</p>
+              <p><a className="btn btn-secondary" href="#">Ver cardápio &raquo;</a></p>
+            </div>
+            <div className="col-lg-4 text-center" style={{width: "300px"}}>
+              <img src="https://http2.mlstatic.com/D_NQ_NP_958464-MLB69426005651_052023-O.webp" alt="placa escrito reservado" className="img-fluid rounded-circle" width="140" height="140" />
+              <h2 className="fw-normal">Contato</h2>
+              <p>Entre em contato conosco para mais informações.</p>
+              <p><a className="btn btn-secondary" href="#">Fale conosco &raquo;</a></p>
+            </div>
+          </div>
 
-        <div className="collapse navbar-collapse justify-content-md-center" id="navbarsExample10">
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">Centered nav only</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Link</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link disabled" aria-disabled="true">Disabled</a>
-            </li>
-            <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
-              <ul className="dropdown-menu">
-                <li><a className="dropdown-item" href="#">Action</a></li>
-                <li><a className="dropdown-item" href="#">Another action</a></li>
-                <li><a className="dropdown-item" href="#">Something else here</a></li>
-              </ul>
-            </li>
-          </ul>
+          <hr className="featurette-divider" />
+
+          <div className="row featurette">
+            <div className="col-md-7">
+              <h2 className="featurette-heading fw-normal lh-1">Ambiente Aconchegante. <span className="text-body-secondary">Venha nos visitar!</span></h2>
+              <p className="lead">Desfrute de uma experiência gastronômica única em um ambiente acolhedor e relaxante.</p>
+            </div>
+            <div className="col-md-5">
+              <img src="https://salvadordabahia.b-cdn.net/wp-content/uploads/2019/08/restaurante-pedra-do-mar--rio-vermelho--salvador-bahia--foto-tarso-figueira-assessoria-4-500x500.jpg" alt="Restaurante com ambiente aconchegante" className="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" />
+            </div>
+          </div>
+
+          <hr className="featurette-divider" />
+
+          <div className="row featurette">
+            <div className="col-md-7 order-md-2">
+              <h2 className="featurette-heading fw-normal lh-1">Pratos Especiais. <span className="text-body-secondary">Experimente o melhor!</span></h2>
+              <p className="lead">Oferecemos pratos feitos com ingredientes frescos, preparados por nossos chefs especializados.</p>
+            </div>
+            <div className="col-md-5 order-md-1">
+              <img src="https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="Prato Especial" className="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" />
+            </div>
+          </div>
+
+          <hr className="featurette-divider" />
         </div>
-      </div>
-    </nav>
 
-    <div>
-      <div className="bg-body-tertiaryp-5 rounded">
-        <div className="col-sm-8 mx-auto">
-          <h1>Navbar examples</h1>
-          <p>This example is a quick exercise to illustrate how the navbar and its contents work. Some navbars extend the width of the viewport, others are confined within a <code>.container</code>. For positioning of navbars, checkout the <a href="../examples/navbar-static/">top</a> and <a href="../examples/navbar-fixed/">fixed top</a> examples.</p>
-          <p>At the smallest breakpoint, the collapse plugin is used to hide the links and show a menu button to toggle the collapsed content.</p>
-          <p>
-            <a className="btn btn-primary" href="../components/navbar/" role="button">View navbar docs &raquo;</a>
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-
-
-
-
-
-        <h1>Login Necessário</h1>
-        <p>Realize o login para poder acessar cadastro</p>
-        <Link href={"/login"} className={styles.link}>Ir para login</Link>
-        <h1>Atividade 2 - PTAC4</h1>
-        <p>Três Interfaces</p>
-        <Link href={"/cadastro"} className={styles.link}>Ir para página Cadastro</Link>
-        <p style={{fontSize: "12px"}}>Dupla: Anabela e Victor Solique</p>
+        <footer className="container">
+          <p className="float-end"><a href="#">Voltar ao topo</a></p>
+          <p>&copy; 2024 Restaurante Delícias, Inc. &middot; <a href="#">Privacidade</a> &middot; <a href="#">Termos</a></p>
+        </footer>
+      </main>
     </div>
 
   );
