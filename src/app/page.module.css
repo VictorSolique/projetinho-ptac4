@@ -20,3 +20,20 @@
   margin-block: 15px;
 
 }
+
+.divider {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+
+.hCustom {
+  height: calc(100% - 73px);
+}
+
+@media (max-width: 450px) {
+  .hCustom {
+    height: 100%;
+  }
+}
