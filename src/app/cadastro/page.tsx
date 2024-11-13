@@ -1,8 +1,15 @@
 'use client'
-
 import { useState } from "react";
 import Usuario from "../interfaces/usuario";
 import { useRouter } from "next/navigation";
+import { ApiURL } from "../config";
+import { setCookie } from "nookies";
+
+interface ResponseSignin {
+    erro: boolean,
+    mensagem: string,
+    token?: string
+}
 
 export default function Cadastro() {
     const [usuario, setUsuario] = useState<Usuario>({
@@ -15,7 +22,47 @@ export default function Cadastro() {
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
 
+    const onSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if(usuario.nome.length < 6) {
+            return window.alert("O nome deve ter pelo menos 6 caracteres")
+        }
+        if(usuario.email.length < 10) {
+            return window.alert("O email deve ter pelo menos 10 caracteres")
+        }
+        if(usuario.password.length < 8) {
+            return window.alert("A senha deve ter pelo menos 8 caracteres")
+        }
+
+        const response = await fetch(`${ApiURL}/auth/cadastro`, {
+            method: 'POST',
+            headers: {
+              'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify(usuario)
+           })
+            if (response){
+              const data : ResponseSignin = await response.json()
+              const {erro, mensagem, token = ''} = data;
+              console.log(data)
+              if (erro){
+                setError(mensagem)  
+              } else {
+                setCookie(undefined, 'restaurant-token', token, {
+                    maxAge: 60*60*1 // 1 hora
+                  } )
+                router.push('/')
+              }
+            } else {
+              setError("Resposta não respondida");
+            }
+
+        // Aqui você pode adicionar lógica para enviar os dados para o seu backend
+        console.log('Usuário cadastrado:', usuario);
+    }
+
     const alterarNome = (novoNome: string) => {
+        
         setUsuario((usuarioAnterior) => ({
             ...usuarioAnterior,
             nome: novoNome
@@ -36,15 +83,7 @@ export default function Cadastro() {
         }));
     }
 
-    const onSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-
-        // Aqui você pode adicionar lógica para enviar os dados para o seu backend
-        console.log('Usuário cadastrado:', usuario);
-
-        // Redireciona para a página de login ou outra página após o cadastro
-        router.push('/login');
-    }
+    
 
     return (
         <div className=" vh-100 bg-dark">
@@ -60,6 +99,7 @@ export default function Cadastro() {
                         onChange={(e) => alterarNome(e.target.value)}
                         className="form-control form-control-lg"
                         required
+                        min={6}
                     />
                 </div>
 
@@ -72,6 +112,7 @@ export default function Cadastro() {
                         onChange={(e) => alterarEmail(e.target.value)}
                         className="form-control form-control-lg"
                         required
+                        min={10}
                     />
                 </div>
 

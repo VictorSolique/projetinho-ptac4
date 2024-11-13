@@ -1,12 +1,20 @@
 'use client'
 import styles from "./page.module.css"
 import Link from "next/link";
-import Button from "./components/Button";
-import MyInput from "./components/Input";
-import { AUTOMATIC_FONT_OPTIMIZATION_MANIFEST } from "next/dist/shared/lib/constants";
 import Header from "./components/Header";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { parseCookies } from "nookies";
 
 export default function Home() {
+  const router = useRouter();
+  useEffect(() => {
+    const {'restaurant-token' : token} = parseCookies()
+    if (!token){
+      router.push('/login')
+    }
+  }, [])
+
   return (
     <div>
 

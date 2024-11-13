@@ -2,67 +2,67 @@
 import styles from "../page.module.css";
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Usuario from "../interfaces/usuario";
+import { parseCookies, setCookie } from 'nookies';
 import Link from "next/link";
+import { ApiURL } from "../config";
+
+interface ResponseSignin {
+  erro: boolean,
+  mensagem: string,
+  token?: string
+}
 
 export default function Login() {
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
   const [error, setError] = useState<string>();
-  const [usuarios, setUsuarios] = useState<Usuario[]>([
-    {
-      id: 1,
-      nome: "Jorginho BeachTenis",
-      email: "jorginho.beachtenis@gmail.com",
-      password: "senha123",
-      tipo: "adm"
-    },
-    {
-      id: 2,
-      nome: "Cela Lopes",
-      email: "cela.lopes@gmail.com",
-      password: "senha123",
-      tipo: "cliente"
-    },
-    {
-      id: 2,
-      nome: "Usuario",
-      email: "usuario@gmail.com",
-      password: "123456",
-      tipo: "cliente"
-    }
-  ])
   const router = useRouter();
 
-
-  const handleSubmit = async (e:FormEvent) => {
-    e.preventDefault();
-
-    fetch("")
-    console.log("Email:", email);
-    console.log("Senha:", password);    
-  }
-
-
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const usuario = usuarios.find((user) => user.email == email && user.password == password)
-    if (usuario) {
-      localStorage.setItem('usuario', JSON.stringify(usuario))
-      router.push('/')
-    }
-    else {
-      setError("Email ou senha invalidos")
-    }
-
-  }
-
   useEffect(() => {
-    const usuarioLogado = localStorage.getItem('usuario')
-    if (usuarioLogado) {
+    const {'restaurant-token' : token} = parseCookies()
+    if (token){
       router.push('/')
     }
-  }, [router])
+  }, [])
+
+  const  handleSubmit = async (e : FormEvent) => {
+    e.preventDefault();
+    try {
+     const response = await fetch(`${ApiURL}/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type' : 'application/json'
+      },
+      body: JSON.stringify({email, password})
+     })
+      if (response){
+        const data : ResponseSignin = await response.json()
+        const {erro, mensagem, token = ''} = data;
+        console.log(data)
+        if (erro){
+          setError(mensagem)
+        } else {
+          // npm i nookies setCookie
+          setCookie(undefined, 'restaurant-token', token, {
+            maxAge: 60*60*1 // 1 hora
+          } )
+          router.push('/')
+        }
+      } else {
+        setError("Resposta não respondida");
+      }
+  } 
+   catch (error) {
+  console.error('Erro na requisicao', error)
+}
+
+
+    console.log("Email:", email);
+    console.log("Senha:", password);
+  }
+
+
+  
 
   return (
     <section className="vh-100 bg-dark">
@@ -74,7 +74,7 @@ export default function Login() {
 
                 <h3 className="mb-5">Fazer login</h3>
 
-                <form onSubmit={onSubmit}>
+                <form onSubmit={handleSubmit}>
 
                   <div data-mdb-input-init className="form-outline mb-3">
                     <input type="email" id="typeEmail-2"
