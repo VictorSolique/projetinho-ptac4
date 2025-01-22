@@ -1,5 +1,5 @@
-interface Reserva {
-    id: number,
+interface ReservasType {
+    id?: number,
     usuario_id: number,
     mesa_id: number,
     data: Date,
@@ -7,4 +7,4 @@ interface Reserva {
     status: boolean
 }
 
-export default Reserva;
+export default ReservasType;
