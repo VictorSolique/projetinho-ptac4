@@ -10,16 +10,28 @@ import ResponseSignin from "../interfaces/response";
 
 export default function Reservas() {
     const [mesas, setMesas] = useState<MesasType[]>([]);
-    const [reserva, setReserva] = useState<ReservasType>({
+    const [reserva, setReserva] = useState<Reservas[]>([])
+    const [formReserva, setFormReserva] = useState<Reservas>({
+        id:0,
         usuario_id: 0,
         mesa_id: 0,
         data: new Date,
         n_pessoas: 0,
         status: false
-    });
+    })
+
     const [dateTables, setDateTables] = useState(getDateNow());
     const [mesaSelecionada, setMesaSelecionada] = useState<number | null>(null);
     const [msgError, setMsgError] = useState<string | null>(null);
+
+   
+    function alterFormReservas<K extends keyof Reservas> (key: K, value: Reservas[K]){
+        console.log(key, value)
+        setFormReserva( (prevForm) => ({
+            ...prevForm,
+            [key] : value
+        }))
+    }
 
     useEffect(() => {
         async function fetchData() {
@@ -48,6 +60,12 @@ export default function Reservas() {
     }
     function handleChangeDate(e: ChangeEvent<HTMLInputElement>) {
         setDateTables(e.target.value);
+    }
+
+    async function handleSubmitFor(e: FormEvent) {
+        e.preventDefault()
+        console.log(formReserva)
+        
     }
 
     const onSubmit = async (e: React.FormEvent) => {
@@ -119,7 +137,7 @@ export default function Reservas() {
                                 <div>
                                     <h2 className="text-xl font-bold mb-4">Reservar Mesa {mesaSelecionada}</h2>
                                     <p>Código: </p>
-                                    <form onSubmit={onSubmit} className="flex flex-col space-y-4">
+                                    <form className="flex flex-col space-y-4" onSubmit={handleSubmitFor}>
                                         <div className="mb-3">
                                             <label htmlFor="dateInput" className="form-label">Data da Reserva</label>
                                             <input
@@ -127,7 +145,7 @@ export default function Reservas() {
                                                 className="form-control"
                                                 id="dateInput"
                                                 value={reserva.data.toISOString().split("T")[0]}
-                                                onChange={(e) => alterarData(e.target.value)}
+                                                onChange={(e) => alterarFormreserva("usuario_id", parseInt(e.target.value))}
                                             />
                                             <div className="form-text">Coloque a data que irá reservar a mesa</div>
                                         </div>
