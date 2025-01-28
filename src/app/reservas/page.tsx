@@ -54,7 +54,7 @@ export default function Reservas() {
         e.preventDefault();
 
         const { 'restaurant-token': token } = parseCookies();
-
+        
         try {
             const response = await fetch(`${ApiURL}/reservas/novo`, {
                 method: 'POST',
@@ -64,11 +64,11 @@ export default function Reservas() {
                 },
                 body: JSON.stringify({ ...reserva, mesa_id: mesaSelecionada })
             });
-
+    
             if (!response.ok) {
                 throw new Error('Erro ao cadastrar a reserva.'); // Lança erro se a resposta não for ok
             }
-
+    
             const data: ResponseSignin = await response.json();
             if (data.erro) {
                 setMsgError(data.mensagem); // Exibe mensagem de erro
@@ -97,9 +97,6 @@ export default function Reservas() {
         }));
     }
 
-    console.log(mesas);
-    console.log(mesaSelecionada);
-
 
 
     return (
@@ -121,15 +118,14 @@ export default function Reservas() {
                             {mesaSelecionada !== null && (
                                 <div>
                                     <h2 className="text-xl font-bold mb-4">Reservar Mesa {mesaSelecionada}</h2>
-                                    <p>Código da Mesa: {mesas[mesaSelecionada - 1].codigo}</p>
-                                    <p>Número de Lugares: {mesas[mesaSelecionada - 1].n_lugares} cadeiras</p>
+                                    <p>Código: </p>
                                     <form onSubmit={onSubmit} className="flex flex-col space-y-4">
                                         <div className="mb-3">
                                             <label htmlFor="dateInput" className="form-label">Data da Reserva</label>
                                             <input
-                                                type="date" // Usando CSS Modules
+                                                type="date"
+                                                className="form-control"
                                                 id="dateInput"
-                                                min={dateTables}
                                                 value={reserva.data.toISOString().split("T")[0]}
                                                 onChange={(e) => alterarData(e.target.value)}
                                             />
@@ -144,9 +140,8 @@ export default function Reservas() {
                                                 value={reserva.n_pessoas}
                                                 onChange={(e) => alterarNumPessoas(e.target.value)}
                                                 min={1}
-                                                max={mesas[mesaSelecionada - 1].n_lugares}
                                             />
-                                            <div className="form-text">Coloque até {mesas[mesaSelecionada - 1].n_lugares} pessoas que irão reservar a mesa</div>
+                                            <div className="form-text">Coloque o número de pessoas que irão reservar a mesa</div>
                                         </div>
                                         {msgError &&
                                             <div className="d-flex justify-content-center mb-2">
@@ -160,14 +155,13 @@ export default function Reservas() {
                             {mesaSelecionada === null && <p className="text-gray-700 text-center">Selecione uma mesa para reservar</p>}
                         </div>
                     </div>
-                    <div className="vr p-0"></div>
                     <div className="col-8">
                         <div className="row row-cols-2 d-flex justify-content-center">
                             {mesas.map(table => (
                                 <div
                                     onClick={() => setMesaSelecionada(Number(table.id))}
                                     key={table.id}
-                                    className={`col m-2 p-2 ${styles.mesa} bg-light shadow text-center`}
+                                    className={`col m-2 mb-4 p-2 ${styles.mesa} bg-light shadow`}
                                     style={{ width: "200px" }}
                                 >
                                     <img
@@ -175,12 +169,9 @@ export default function Reservas() {
                                         alt={`Mesa ${table.id}`}
                                         className="text-center img-fluid rounded"
                                     />
-                                    <h4>Mesa 0{table.id}</h4>
-                                    <p><small>Mesa com {table.n_lugares} lugares</small></p>
+                                    <h4>Mesa 0{table.id} - {table.n_lugares} cadeiras</h4>
 
-                                    <hr />
-
-                                    <p className="d-flex text-align-center justify-content-center"><span className="material-symbols-outlined">group</span> Disponível </p>
+                                    <p><span className="material-symbols-outlined text-bottom">group</span> Reservado </p>
                                 </div>
                             )
                             )}
