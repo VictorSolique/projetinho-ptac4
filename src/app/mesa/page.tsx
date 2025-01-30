@@ -41,6 +41,7 @@ export default function Mesa() {
 
             // Aqui você pode adicionar lógica para enviar os dados para o seu backend
             console.log('Mesa cadastrada:', mesa);
+            router.push("/reservas")
         }
     }
 

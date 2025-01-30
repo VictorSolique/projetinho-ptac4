@@ -46,3 +46,31 @@
 .mesa:hover {
   transform: scale(1.05);
 }
+
+
+.customDateInput {
+  padding: 5px;
+  border: none;
+  font-size: 16px; 
+  transition: all 0.3s ease; 
+  box-sizing: border-box; /* Para incluir padding e border na largura */
+}
+
+/* Estilo ao focar no input */
+.customDateInput:focus {
+  outline: none; /* Remove o contorno padrão */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra ao foco */
+}
+
+/* Estilo ao passar o mouse */
+.customDateInput:hover {
+  background-color: #777777; /* Cor de fundo ao passar o mouse */
+}
+
+.transition {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.transition:hover {
+  background-color: #fdc417; 
+}

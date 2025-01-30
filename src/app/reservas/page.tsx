@@ -10,9 +10,7 @@ import ResponseSignin from "../interfaces/response";
 
 export default function Reservas() {
     const [mesas, setMesas] = useState<MesasType[]>([]);
-    const [reserva, setReserva] = useState<Reservas[]>([])
-    const [formReserva, setFormReserva] = useState<Reservas>({
-        id:0,
+    const [reserva, setReserva] = useState<ReservasType>({
         usuario_id: 0,
         mesa_id: 0,
         data: new Date,
@@ -23,16 +21,6 @@ export default function Reservas() {
     const [dateTables, setDateTables] = useState(getDateNow());
     const [mesaSelecionada, setMesaSelecionada] = useState<number | null>(null);
     const [msgError, setMsgError] = useState<string | null>(null);
-
-   
-    function alterFormReservas<K extends keyof Reservas> (key: K, value: Reservas[K]){
-        console.log(key, value)
-        setFormReserva( (prevForm) => ({
-            ...prevForm,
-            [key] : value
-        }))
-    }
-
     useEffect(() => {
         async function fetchData() {
             try {
@@ -62,41 +50,37 @@ export default function Reservas() {
         setDateTables(e.target.value);
     }
 
-    async function handleSubmitFor(e: FormEvent) {
-        e.preventDefault()
-        console.log(formReserva)
-        
-    }
-
     const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         const { 'restaurant-token': token } = parseCookies();
-        
-        try {
-            const response = await fetch(`${ApiURL}/reservas/novo`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({ ...reserva, mesa_id: mesaSelecionada })
-            });
-    
-            if (!response.ok) {
-                throw new Error('Erro ao cadastrar a reserva.'); // Lança erro se a resposta não for ok
-            }
-    
+
+
+        const response = await fetch(`${ApiURL}/reservas/novo`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ ...reserva, mesa_id: mesaSelecionada })
+        });
+
+        setReserva((reservaAnterior) => ({
+            ...reservaAnterior,
+            mesa_id: Number(mesaSelecionada)
+        }));
+
+        if (response) {
             const data: ResponseSignin = await response.json();
-            if (data.erro) {
-                setMsgError(data.mensagem); // Exibe mensagem de erro
+            const { erro, mensagem, token = '' } = data;
+            console.log(data)
+            if (erro) {
+                setMsgError(mensagem);
             } else {
                 console.log('Reserva cadastrada:', reserva);
-                // Aqui você pode limpar o formulário ou redirecionar
             }
-        } catch (error) {
-            console.error('Error submitting reservation:', error);
-            setMsgError('Erro ao cadastrar a reserva.'); // Exibe mensagem de erro
+        } else {
+            setMsgError("Resposta não respondida");
         }
     };
 
@@ -114,6 +98,9 @@ export default function Reservas() {
             n_pessoas: Number(numPessoas)
         }));
     }
+
+
+    console.log(mesaSelecionada, reserva, mesas);
 
 
 
@@ -136,16 +123,17 @@ export default function Reservas() {
                             {mesaSelecionada !== null && (
                                 <div>
                                     <h2 className="text-xl font-bold mb-4">Reservar Mesa {mesaSelecionada}</h2>
-                                    <p>Código: </p>
-                                    <form className="flex flex-col space-y-4" onSubmit={handleSubmitFor}>
+                                    <p>Código da mesa: {mesas[mesaSelecionada-1].codigo} </p>
+                                    <form className="flex flex-col space-y-4" onSubmit={onSubmit}>
                                         <div className="mb-3">
                                             <label htmlFor="dateInput" className="form-label">Data da Reserva</label>
                                             <input
                                                 type="date"
-                                                className="form-control"
                                                 id="dateInput"
+                                                className={`p-2 border rounded mb-3 ${styles.customDateInput}`}
                                                 value={reserva.data.toISOString().split("T")[0]}
-                                                onChange={(e) => alterarFormreserva("usuario_id", parseInt(e.target.value))}
+                                                onChange={(e) => alterarData(e.target.value)}
+                                                min={getDateNow()}
                                             />
                                             <div className="form-text">Coloque a data que irá reservar a mesa</div>
                                         </div>
@@ -158,8 +146,10 @@ export default function Reservas() {
                                                 value={reserva.n_pessoas}
                                                 onChange={(e) => alterarNumPessoas(e.target.value)}
                                                 min={1}
+                                                max={mesas[mesaSelecionada-1].n_lugares}
                                             />
-                                            <div className="form-text">Coloque o número de pessoas que irão reservar a mesa</div>
+
+                                            <div className="form-text">Coloque o número de pessoas que irão reservar a mesa ({mesas[mesaSelecionada-1].n_lugares})</div>
                                         </div>
                                         {msgError &&
                                             <div className="d-flex justify-content-center mb-2">
