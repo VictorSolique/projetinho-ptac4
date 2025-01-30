@@ -12,6 +12,11 @@ export default function Header() {
     const [tipo, setTipo] = useState('');
 
     useEffect(() => {
+    const { 'restaurant-token': token } = parseCookies();
+
+        if (!token) {
+            router.push("/login")
+        }
         fetchPerfil();
     }, []);
 
@@ -73,7 +78,7 @@ export default function Header() {
                             <ul className="navbar-nav">
                                 <li className="p-2">
                                     <span>Administrador: &nbsp;</span>
-                                    <a className="text-decoration-none" href="#" onClick={() => router.push('/mesa')}>Cadastrar Mesas</a>
+                                    <a className="text-decoratoinnone" href="#" onClick={() => router.push('/mesa')}>Cadastrar Mesas</a>
                                 </li>
 
                             </ul>

@@ -99,11 +99,6 @@ export default function Reservas() {
         }));
     }
 
-
-    console.log(mesaSelecionada, reserva, mesas);
-
-
-
     return (
         <div>
             <Header />
@@ -179,7 +174,7 @@ export default function Reservas() {
                                     />
                                     <h4>Mesa 0{table.id} - {table.n_lugares} cadeiras</h4>
 
-                                    <p><span className="material-symbols-outlined text-bottom">group</span> Reservado </p>
+                                    <p><span className="material-symbols-outlined text-bottom">group</span> Disponível </p>
                                 </div>
                             )
                             )}
